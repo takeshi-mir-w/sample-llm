@@ -1,0 +1,41 @@
+repos:
+  - repo: local
+    hooks:
+    - id: isort
+      name: do isort
+      entry: isort
+      args: ["--profile", "black"]
+      language: python
+      types: [python]
+      require_serial: true
+    - id: mypy
+      name: do mypy
+      entry: mypy
+      args: [--ignore-missing-imports]
+      language: python
+      types: [python]
+      require_serial: true
+      files: 'periodic_jobs_observer/.*'
+    - id: flake8
+      name: do flake8
+      entry: flake8
+      language: python
+      types: [python]
+      require_serial: true
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+  - repo: https://github.com/ambv/black
+    rev: 23.1.0
+    hooks:
+    - id: black
+      language_version: python3
+
+default_language_version:
+    python: python3.11
+
+default_stages: [commit, push]
+
+files: ".py$"
